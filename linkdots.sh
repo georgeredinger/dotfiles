@@ -1,7 +1,3 @@
-~/.files 
-
-symlinked from ~/dotfiles to ~/
-
 #!/usr/bin/env bash
 cd ~/dotfiles
 for i in .*
