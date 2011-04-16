@@ -4,8 +4,45 @@
 # If not running interactively, don't do anything
 #[ -z "$PS1" ] && return
 if [[ -n "$PS1" ]]; then
+#Predefine Colors
+    RED="\[\033[0;31m\]"
+    YELLOW="\[\033[0;33m\]"
+    GREEN="\[\033[0;32m\]"
+    BLUE="\[\033[0;34m\]"
+    LIGHT_RED="\[\033[1;31m\]"
+    LIGHT_GREEN="\[\033[1;32m\]"
+    WHITE="\[\033[1;37m\]"
+    LIGHT_GRAY="\[\033[0;37m\]"
+    COLOR_NONE="\[\e[0m\]"
+    BOLD="\[\033[1m\]"
+    NORMAL="\[\033[m\]"
+# Colors
+txtred='\e[0;31m' # Red
+txtwht='\e[0;37m' # White
+txtrst='\e[0m'    # Text Reset
 
+#
+function detect_rvm_version {
+  local gemset=$(echo $GEM_HOME | awk -F'@' '{print $2}')
+  [ "$gemset" != "" ] && gemset="@$gemset"
+  local version=$(echo $MY_RUBY_HOME | awk -F'-' '{print $2}')
+  [ "$version" != "" ] && version="$version"
+  local full="$version$gemset"
+  [ "$full" != "" ] && echo "$full"
+}
 
+function detect_git_dirty {
+  local git_status=$(git status 2>&1 | tail -n1)
+  [[ $git_status != "fatal: Not a git repository (or any of the parent directories): .git" ]] && [[ $git_status != "nothing to commit (working directory clean)" ]] && echo "*"
+}
+
+function detect_git_branch {
+  git branch --no-color 2> /dev/null | sed -e '/^[^*]/d' -e "s/* \(.*\)/\1/"
+}
+
+function dev_info {
+  echo "[$(detect_rvm_version) $(detect_git_branch)$(detect_git_dirty)]"
+}
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
 HISTCONTROL=ignoredups:ignorespace
@@ -79,10 +116,17 @@ if [ -x /usr/bin/dircolors ]; then
 fi
 alias t='tmux -u'
 alias ack='ack-grep'
-alias r='rails'
+#git stuff
 alias gst='git status'
 alias gd='git difftool'
+alias gst='git status'
+alias gca='git commit -a'
+alias gcam='git commit -am'
 
+#rails stuff
+alias r='rails'
+#run cucumber when running autotest
+#export AUTOFEATURE=true
 # some more ls aliases
 alias ll='ls -alF'
 alias la='ls -A'
@@ -108,6 +152,7 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
+export PS1="\[$txtwht\]\w \[$txtred\]\$(dev_info) \[$txtrst\]"
 
 fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
