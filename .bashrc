@@ -3,6 +3,7 @@
 # for examples
 # If not running interactively, don't do anything
 #[ -z "$PS1" ] && return
+export PATH="$PATH:/home/george/bin"
 if [[ -n "$PS1" ]]; then
 #Predefine Colors
     RED="\[\033[0;31m\]"
@@ -131,7 +132,9 @@ alias r='rails'
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias sus='sudo pm-suspend'
 
+export EDITOR='vi'
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
