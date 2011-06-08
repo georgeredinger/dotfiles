@@ -124,6 +124,19 @@ alias gst='git status'
 alias gca='git commit -a'
 alias gcam='git commit -am'
 
+alias gp='git push'
+alias gb='git branch'
+alias gc='git checkout'
+alias gm='git commit -m'
+alias gma='git commit -am'
+#alias gd='git diff'
+alias gs='git status'
+alias gra='git remote add'
+alias grr='git remote rm'
+alias gpu='git pull'
+alias gl='git log'
+alias ga='git add'
+alias gcl='git clone'
 #rails stuff
 alias r='rails'
 #run cucumber when running autotest
@@ -159,5 +172,10 @@ export PS1="\[$txtwht\]\w \[$txtred\]\$(dev_info) \[$txtrst\]"
 
 fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm"
-source .bash_secrets
+source /etc/profile
+source ~/.bash_secrets
 
+export PS1="\[$txtwht\]\w \[$txtred\]\$(dev_info) \[$txtrst\]"
+
+# Added by autojump install.sh
+source /etc/profile.d/autojump.bash
